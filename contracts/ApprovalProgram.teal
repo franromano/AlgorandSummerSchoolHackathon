@@ -83,7 +83,44 @@ return
 
 
 addMonster:
-//append monster to monsters box
+pushbytes "MONSTERS"
+dup
+dup
+
+pushint 0
+pushint 8
+box_extract
+btoi //lo agrega a stack
+pushint 24
+* // multplicamos cantidad de monstruos por 8ytes         kength ! m0 ! m1 !
+int 8
++
+
+dup
+store 0
+
+
+txna ApplicationArgs 1
+itob
+txna ApplicationArgs 2
+itob
+txna ApplicationArgs 3
+itob
+concat
+concat
+
+box_replace
+
+int 0
+load 0
+int 1
++
+itob
+box_replace
+
+int 1
+return
+
 
 // ApplicationArgs 1 is X
 // ApplicationArgs 2 is Y

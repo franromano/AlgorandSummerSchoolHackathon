@@ -118,6 +118,20 @@ int 1
 itob
 box_replace
 
+//mint nft
+itxn_begin
+int 1
+itxn_field Amount
+int 0
+itxn_field ConfigAssetDecimals
+global CurrentApplicationAddress
+dup
+itxn_field ConfigAssetManager
+itxn_field ConfigAssetClawback
+int 1
+itxn_field FreezeAssetFrozen
+itxn_submit
+
 int 1
 return
 
@@ -140,6 +154,44 @@ exitAndSavePlayer:
 
 playerMove:
 //allow the player to move through the map
+txna ApplicationArgs 1
+pushbytes "up"
+==
+bz move_up_or_down
+txna ApplicationArgs 1
+pushbytes "down"
+==
+bz move_up_or_down
+
+txna ApplicationArgs 1
+pushbytes "left"
+==
+bz move_left_or_right
+txna ApplicationArgs 1
+pushbytes "right"
+==
+bz move_left_or_right
+
+
+move_up_or_down:
+txn Sender
+dup
+int 8
+int 16
+box_extract
+btoi
+int 1
++
+
+int 8
+box_replace
+
+
+move_left_or_right:
+txn Sender
+int 0
+int 8
+box_extract
 
 
 

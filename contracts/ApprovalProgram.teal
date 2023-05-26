@@ -263,20 +263,20 @@ exitAndSavePlayer:
 playerMove:
 //allow the player to move through the map
 txna ApplicationArgs 1
-pushbytes "up"
+pushbytes "UP"
 ==
 bz move_up_or_down
 txna ApplicationArgs 1
-pushbytes "down"
+pushbytes "DOWN"
 ==
 bz move_up_or_down
 
 txna ApplicationArgs 1
-pushbytes "left"
+pushbytes "LEFT"
 ==
 bz move_left_or_right
 txna ApplicationArgs 1
-pushbytes "right"
+pushbytes "RIGHT"
 ==
 bz move_left_or_right
 
@@ -299,8 +299,16 @@ box_replace
 move_left_or_right:
 txn Sender
 int 0
+txn Sender
+int 0
 int 8
 box_extract
+btoi
+int 1
++
+itob
+
+box_replace
 
 
 

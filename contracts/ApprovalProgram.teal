@@ -91,24 +91,54 @@ pushint 0
 pushint 8
 box_extract
 btoi //lo agrega a stack
+dup
+store 0
 pushint 24
 * // multplicamos cantidad de monstruos por 8ytes         kength ! m0 ! m1 !
 int 8
 +
 
-dup
-store 0
+
+
+load 0
+itob
+log
+//return
 
 
 txna ApplicationArgs 1
-itob
 txna ApplicationArgs 2
-itob
-txna ApplicationArgs 3
-itob
 concat
-concat
+//mint nft
+itxn_begin
 
+int acfg
+itxn_field TypeEnum
+
+byte "Demo Asset"
+itxn_field ConfigAssetName
+
+byte "DA"
+itxn_field ConfigAssetUnitName
+
+int 1
+itxn_field ConfigAssetTotal
+
+int 0
+itxn_field ConfigAssetDecimals
+
+global CurrentApplicationAddress
+dupn 3
+itxn_field ConfigAssetManager
+itxn_field ConfigAssetReserve
+itxn_field ConfigAssetFreeze
+itxn_field ConfigAssetClawback
+
+itxn_submit
+
+itxn CreatedAssetID
+itob
+concat
 box_replace
 
 int 0
@@ -118,19 +148,7 @@ int 1
 itob
 box_replace
 
-//mint nft
-itxn_begin
-int 1
-itxn_field Amount
-int 0
-itxn_field ConfigAssetDecimals
-global CurrentApplicationAddress
-dup
-itxn_field ConfigAssetManager
-itxn_field ConfigAssetClawback
-int 1
-itxn_field FreezeAssetFrozen
-itxn_submit
+
 
 int 1
 return
@@ -265,15 +283,16 @@ bz move_left_or_right
 
 move_up_or_down:
 txn Sender
-dup
+int 8
+txn Sender
 int 8
 int 16
 box_extract
 btoi
 int 1
 +
+itob
 
-int 8
 box_replace
 
 
